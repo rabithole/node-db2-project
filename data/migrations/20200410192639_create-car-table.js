@@ -6,11 +6,16 @@ exports.up = function(knex) {
   	tbl.text('carId', 128) // 128 is a character limit
   		.unique()	// unique and notNullable are contraints on the data. 
   		.notNullable();
-  	tbl.text('make');
-  	tbl.text('model');
-  	tbl.text('VIN');
-  	tbl.text('mileage');
-  	tbl.text('');
+  	tbl.string('make')
+  		.notNullable();
+  	tbl.string('model')
+  		.notNullable();
+  	tbl.string('VIN')
+  		.notNullable();
+  	tbl.integer('mileage')
+  		.notNullable()
+  	tbl.string('transmission');
+  	tbl.boolean('salvage')
   })
 };
 
