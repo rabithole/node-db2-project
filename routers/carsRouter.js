@@ -1,6 +1,6 @@
 const express = require('express');
 // const Cars = require('../data/car-dealer.db3');
-const Cars = require('../data/dbConfig.js');
+const db = require('../data/dbConfig.js');
 
 const router = express.Router();
 
@@ -9,9 +9,9 @@ const router = express.Router();
 router.post('/', (req, res) => {
   console.log(req.body);
 
-  Cars('cars').insert(req.body)
+  db('cars').insert(req.body)
   .then(car => {
-    res.status(200).json({ success: `${postText} has been posted to Cars id ${userId}` })
+    res.status(200).json({ success: 'You have succeeded!' })
   })
   .catch(error => {
     res.status(510).json({ error: '510, you have successfully failed!' })
@@ -21,7 +21,7 @@ router.post('/', (req, res) => {
 
 router.get('/', (req, res) => {
   console.log(req.body);
-  Cars('cars')
+  db('cars')
   .then(cars => {
     res.status(200).json(cars);
   })
@@ -31,36 +31,22 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  // do your magic!
-  const userId = req.params.id;
+  const { id } = req.params;
+  console.log(id);
 
-   Cars.getById(userId)
-  .then(users => {
-    res.status(200).json(users);
+   db('cars').where({ id })
+  .then(car => {
+    res.status(200).json(car);
   })
   .catch(error => {
-    res.status(500).json({ error: '500, server error!' })
-  })
-});
-
-router.get('/:id/posts', (req, res) => {
-  // do your magic!
-  console.log(req.params.id);
-  const userId = req.params.id;
-
-  Cars.getUserPosts(userId)
-  .then(userPosts => {
-    res.status(200).json(userPosts)
-  })
-  .catch(error => {
-    res.status(500).json({ error: '500, server error!' })
+    res.status(520).json({ error: '520, a successfull error!' })
   })
 });
 
 // router.delete('/:id', validateUserId, (req, res) => {
 //   // do your magic!
 //   console.log(req.params);
-//   const userId = req.params.id;
+//   const carId = req.params.id;
 
 //   Cars.remove(userId)
 //   .then(user => {
